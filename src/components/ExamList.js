@@ -114,14 +114,14 @@ class ExamList extends Component {
 
   componentDidMount() {
     axios
-      .get("https://my-json-server.typicode.com/cigolie/ex/exams")
+      .get(`${process.env.API_URL}/exams`)
       .then((res) => {
         this.setState({ exams: res.data });
       });
   }
   handleDelete = (id) => {
     axios
-      .delete("https://my-json-server.typicode.com/cigolie/ex/exams/" + id)
+      .delete(`${process.env.API_URL}/exams/` + id)
 
       .then((res) => {
         console.log(res);
@@ -147,7 +147,7 @@ class ExamList extends Component {
     const index = this.state.exams.findIndex((exam) => exam.id === id);
     let { date, numberOfSeats, classroom } = this.state.editExamData;
     axios
-      .put("https://my-json-server.typicode.com/cigolie/ex/exams/" + index, {
+      .put(`${process.env.API_URL}/exams/` + index, {
         date,
         numberOfSeats,
         classroom,
