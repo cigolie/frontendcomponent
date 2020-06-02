@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
-
+import Grid from "@material-ui/core/Grid";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = (theme) => ({
@@ -66,29 +66,31 @@ const useStyles = (theme) => ({
   },
 });
 
+const initialState = {
+  universityYear: "",
+  studyYear: "",
+  section: "",
+  numberOfSeats: "",
+  subjectExam: "",
+  teacher: "",
+  classroom: "",
+  semester: "",
+  date: "",
+};
+
 export class Exam extends Component {
-  state = {
-    universityYear: "",
-    studyYear: 0,
-    section: "",
-    numberOfSeats: 0,
-    subjectExam: "",
-    teacher: "",
-    classroom: "",
-    semester: 0,
-    date: "",
-  };
+  state = initialState;
 
   handleReset = (event) => {
     this.setState({
       universityYear: "",
-      studyYear: 0,
+      studyYear: "",
       section: "",
-      numberOfSeats: 0,
+      numberOfSeats: "",
       subjectExam: "",
       teacher: "",
       classroom: "",
-      semester: 0,
+      semester: "",
       date: "",
     });
   };
@@ -120,12 +122,13 @@ export class Exam extends Component {
         console.log(res.data);
         this.props.addExam(exam);
       });
+    this.setState(initialState);
   };
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" style={{ background: "#1b5e20" }}>
           <Toolbar style={{ width: "97%" }}>
             <Typography className={classes.title} variant="h6" noWrap>
               Exam
@@ -142,128 +145,148 @@ export class Exam extends Component {
             >
               <div className={classes.column}> Add exam</div>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails className={classes.details}>
-              <div className={classes.column}>
-                <form
-                  className={classes.root}
-                  onSubmit={this.handleSubmit}
-                  onReset={this.handleReset}
-                >
+            <Grid
+              container
+              spacing={0}
+              direction="column"
+              alignItems="center"
+              justify="center"
+              style={{ minHeight: "100vh" }}
+            >
+              <Grid item xs={3}>
+                <ExpansionPanelDetails className={classes.details}>
                   <div className={classes.column}>
-                    <Typography className={classes.secondaryHeading}>
+                    <form
+                      className={classes.root}
+                      onSubmit={this.handleSubmit}
+                      onReset={this.handleReset}
+                    >
+                      <div className={classes.column}>
+                        <Typography className={classes.secondaryHeading}>
+                          <TextField
+                            required
+                            id="major"
+                            label="Insert major"
+                            name="section"
+                            variant="outlined"
+                            value={this.state.section}
+                            onChange={this.handleChange}
+                          />
+                        </Typography>
+                      </div>
+                      <div className={classes.column}>
+                        <Typography className={classes.secondaryHeading}>
+                          <TextField
+                            required
+                            id="studyYear"
+                            label="Insert study year"
+                            name="studyYear"
+                            variant="outlined"
+                            value={this.state.studyYear}
+                            onChange={this.handleChange}
+                          />
+                        </Typography>
+                      </div>
+                      <div className={classes.root}>
+                        <TextField
+                          required
+                          id="semester"
+                          label="Semester"
+                          name="semester"
+                          variant="outlined"
+                          value={this.state.semester}
+                          onChange={this.handleChange}
+                        />
+                      </div>
                       <TextField
                         required
-                        id="major"
-                        label="Insert major"
-                        name="section"
-                        value={this.state.section}
+                        id="subject"
+                        label="Insert subject"
+                        name="subjectExam"
+                        variant="outlined"
+                        value={this.state.subjectExam}
                         onChange={this.handleChange}
                       />
-                    </Typography>
-                  </div>
-                  <div className={classes.column}>
-                    <Typography className={classes.secondaryHeading}>
                       <TextField
                         required
-                        id="studyYear"
-                        label="Insert study year"
-                        name="studyYear"
-                        type="number"
-                        min="1"
-                        max="4"
-                        value={this.state.studyYear}
+                        id="teacher"
+                        label="Insert teacher"
+                        name="teacher"
+                        variant="outlined"
+                        value={this.state.teacher}
                         onChange={this.handleChange}
                       />
-                    </Typography>
-                  </div>
-                  <div className={classes.root}>
-                    <TextField
-                      required
-                      id="semester"
-                      label="Semester"
-                      name="semester"
-                      value={this.state.semester}
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                  <TextField
-                    required
-                    id="subject"
-                    label="Insert subject"
-                    name="subjectExam"
-                    value={this.state.subjectExam}
-                    onChange={this.handleChange}
-                  />
-                  <TextField
-                    required
-                    id="teacher"
-                    label="Insert teacher"
-                    name="teacher"
-                    value={this.state.teacher}
-                    onChange={this.handleChange}
-                  />
 
-                  <div className={classes.root}>
-                    <TextField
-                      required
-                      id="univyr"
-                      label="University year"
-                      variant="outlined"
-                      name="universityYear"
-                      value={this.state.universityYear}
-                      onChange={this.handleChange}
-                    />
-                  </div>
+                      <div className={classes.root}>
+                        <TextField
+                          required
+                          id="univyr"
+                          label="University year"
+                          variant="outlined"
+                          name="universityYear"
+                          value={this.state.universityYear}
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                      <br></br>
+                      <br></br>
 
-                  <div className={classes.columns}>
-                    <TextField
-                      id="datetime-local"
-                      label="Date & time"
-                      type="datetime-local"
-                      className={classes.textField}
-                      name="date"
-                      value={this.state.date}
-                      onChange={this.handleChange}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </div>
+                      <div className={classes.columns}>
+                        <TextField
+                          id="datetime-local"
+                          label="Date & time"
+                          type="datetime-local"
+                          className={classes.textField}
+                          name="date"
+                          value={this.state.date}
+                          onChange={this.handleChange}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </div>
 
-                  <div className={classes.root}>
-                    <TextField
-                      required
-                      id="nostd"
-                      label="No. of students"
-                      variant="outlined"
-                      name="numberOfSeats"
-                      value={this.state.numberOfSeats}
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                  <div className={classes.columns}>
-                    <TextField
-                      required
-                      id="classroom"
-                      label="Classroom"
-                      variant="outlined"
-                      name="classroom"
-                      value={this.state.classroom}
-                      onChange={this.handleChange}
-                    />
-                  </div>
+                      <div className={classes.root}>
+                        <TextField
+                          required
+                          id="nostd"
+                          label="No. of students"
+                          variant="outlined"
+                          name="numberOfSeats"
+                          value={this.state.numberOfSeats}
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                      <div className={classes.columns}>
+                        <TextField
+                          required
+                          id="classroom"
+                          label="Classroom"
+                          variant="outlined"
+                          name="classroom"
+                          value={this.state.classroom}
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                      <br></br>
+                      <br></br>
+                      <Divider />
 
-                  <Divider />
-
-                  <Button size="small" type="reset">
-                    Reset
-                  </Button>
-                  <Button size="small" color="primary" type="submit">
-                    Save
-                  </Button>
-                </form>
-              </div>
-            </ExpansionPanelDetails>
+                      <Button size="small" type="reset">
+                        Reset
+                      </Button>
+                      <Button
+                        size="small"
+                        style={{ color: "#1b5e20" }}
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </form>
+                  </div>
+                </ExpansionPanelDetails>
+              </Grid>
+            </Grid>
           </ExpansionPanel>
         </div>
       </div>
