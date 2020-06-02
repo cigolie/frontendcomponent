@@ -73,18 +73,10 @@ class ExamList extends Component {
     };
   }
   componentDidMount() {
-    axios
-      .get(`${process.env.API_URL}/exams`)
-      .then((res) => {
-        this.setState({ exams: res.data });
-      });
+    axios.get(`${process.env.API_URL}/exams`).then((res) => {
+      this.setState({ exams: res.data });
+    });
   }
-<<<<<<< HEAD
-=======
-  handleDelete = (id) => {
-    axios
-      .delete(`${process.env.API_URL}/exams/` + id)
->>>>>>> 446005077121a348071d49dfd444e8f35eac116a
 
   addExam = (exam) => {
     let newExams = [...this.state.exams, exam];
@@ -95,11 +87,7 @@ class ExamList extends Component {
     console.log(exam);
     let { date, numberOfSeats, classroom } = exam;
     axios
-<<<<<<< HEAD
-      .put("https://my-json-server.typicode.com/cigolie/ex/exams/" + exam.id, {
-=======
-      .put(`${process.env.API_URL}/exams/` + index, {
->>>>>>> 446005077121a348071d49dfd444e8f35eac116a
+      .put(`${process.env.API_URL}/exams/` + exam.id, {
         date,
         numberOfSeats,
         classroom,
@@ -127,7 +115,7 @@ class ExamList extends Component {
 
   handleDelete = (id) => {
     axios
-      .delete("https://my-json-server.typicode.com/cigolie/ex/exams/" + id)
+      .delete(`${process.env.API_URL}/exams/` + id)
 
       .then((res) => {
         console.log(res);
