@@ -115,7 +115,7 @@ export class Exam extends Component {
       semester: this.state.semester,
       date: this.state.date,
     };
-    axios.post(`${process.env.API_URL}/exams/`, { exam }).then((res) => {
+    axios.post(`http://localhost:8080/exams/`, { ...exam }).then((res) => {
       console.log(res);
       console.log(res.data);
       this.props.addExam(exam);
