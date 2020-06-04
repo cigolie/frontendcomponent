@@ -73,7 +73,7 @@ class ExamList extends Component {
     };
   }
   componentDidMount() {
-    axios.get(`http://localhost:8080/exams`).then((res) => {
+    axios.get(`${process.env.API_URL}/exams`).then((res) => {
       this.setState({ exams: res.data });
     });
   }
@@ -87,7 +87,7 @@ class ExamList extends Component {
     console.log(exam);
     let { date, numberOfSeats, classroom } = exam;
     axios
-      .put('http://localhost:8080/exams/' + exam.id, {
+      .put('${process.env.API_URL}/exams/' + exam.id, {
         date,
         numberOfSeats,
         classroom,
@@ -115,7 +115,7 @@ class ExamList extends Component {
 
   handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8080/exams/` + id)
+      .delete(`${process.env.API_URL}exams/` + id)
 
       .then((res) => {
         console.log(res);
